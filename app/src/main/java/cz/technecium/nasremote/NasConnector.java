@@ -17,9 +17,11 @@ import java.util.List;
 
 /**
  * Methods for communication with NAS over network.
- *
  */
 public class NasConnector {
+
+    private static final String LOGIN_URL_PATTERN = "http://%s/r51009,/adv,/cgi-bin/weblogin.cgi";
+    private static final String COMMAND_URL_PATTERN = "http://%s/r51009,/adv,/cgi-bin/zysh-cgi";
 
     /**
      * Turns NAS off by sending command via Zyxel Web interface.
@@ -36,8 +38,7 @@ public class NasConnector {
             public void run() {
                 try {
                     CloseableHttpClient client = HttpClients.createDefault();
-                    HttpPost httpPost = new HttpPost(String.format("http://%s/r51009,/adv,/cgi-bin/weblogin.cgi"
-                            , ipAddress));
+                    HttpPost httpPost = new HttpPost(String.format(LOGIN_URL_PATTERN, ipAddress));
                     List<NameValuePair> params = new ArrayList<>();
                     params.add(new BasicNameValuePair("username", username));
                     params.add(new BasicNameValuePair("password", password));
@@ -52,7 +53,7 @@ public class NasConnector {
                     }
 
                     client = HttpClients.createDefault();
-                    httpPost = new HttpPost(String.format("http://%s/r51009,/adv,/cgi-bin/zysh-cgi", ipAddress));
+                    httpPost = new HttpPost(String.format(COMMAND_URL_PATTERN, ipAddress));
                     httpPost.setHeader("Cookie", cookie);
                     params = new ArrayList<>();
                     params.add(new BasicNameValuePair("write", "0"));

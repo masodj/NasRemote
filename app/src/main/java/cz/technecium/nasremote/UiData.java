@@ -1,5 +1,9 @@
 package cz.technecium.nasremote;
 
+/**
+ * Holder for UI data.
+ *
+ */
 public class UiData {
     private String username;
     private String password;

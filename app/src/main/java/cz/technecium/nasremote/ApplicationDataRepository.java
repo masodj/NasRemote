@@ -17,7 +17,7 @@ public class ApplicationDataRepository {
     }
 
     /**
-     * Stores UI state to SharedPreferences
+     * Stores UI state to SharedPreferences.
      *
      * @param data
      */
@@ -31,7 +31,7 @@ public class ApplicationDataRepository {
     }
 
     /**
-     * Gets UI state from SharedPreferences
+     * Gets UI state from SharedPreferences.
      *
      * @return
      */

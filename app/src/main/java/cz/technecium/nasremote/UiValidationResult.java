@@ -4,6 +4,9 @@ import android.widget.TextView;
 
 import java.util.Set;
 
+/**
+ * Holder for UI validation results.
+ */
 public class UiValidationResult {
     private final Set<TextView> invalidElements;
     private final Set<TextView> validElements;

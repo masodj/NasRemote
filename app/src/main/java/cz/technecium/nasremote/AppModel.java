@@ -15,7 +15,7 @@ public class AppModel {
     }
 
     /**
-     * Turn NAS OFF
+     * Turns NAS OFF.
      *
      * @param ipAddress
      * @param username
@@ -26,7 +26,7 @@ public class AppModel {
     }
 
     /**
-     * Turn NAS on
+     * Turns NAS on.
      *
      * @param ipAddress
      * @param nasMacAddress
@@ -36,7 +36,7 @@ public class AppModel {
     }
 
     /**
-     * Stats NAS state resolver and adds main activity as listener to stage changes
+     * Starts NAS state resolver and adds main activity as listener to stage changes
      *
      */
     public void startNasStateResolving(String nasIpAddress) {
