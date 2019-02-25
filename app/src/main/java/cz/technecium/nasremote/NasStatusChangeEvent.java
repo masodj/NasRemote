@@ -1,5 +1,9 @@
 package cz.technecium.nasremote;
 
+/**
+ * NAS status change event object
+ *
+ */
 public class NasStatusChangeEvent {
    private final NasStatusChangeEventType eventType;
 

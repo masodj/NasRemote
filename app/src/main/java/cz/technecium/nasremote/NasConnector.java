@@ -15,8 +15,21 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Methods for communication with NAS over network.
+ *
+ */
 public class NasConnector {
 
+    /**
+     * Turns NAS off by sending command via Zyxel Web interface.
+     *
+     * Method is executed in new thread due to Android no network on main thread policy.
+     *
+     * @param ipAddress
+     * @param username
+     * @param password
+     */
     public void turnOffNas(final String ipAddress, final String username, final String password) {
         new Thread(new Runnable() {
             @Override
@@ -55,6 +68,15 @@ public class NasConnector {
         }).start();
     }
 
+    /**
+     * Turns NAS on by sending magic packet to NAS MAC address via broadcast IP.
+     * For now, broadcast IP address is determined by replacing last part of IP with .255
+     *
+     * Method is executed in new thread due to Android no network on main thread policy.
+     *
+     * @param nasIpAddres
+     * @param nasMacAddress
+     */
     public void turnOnNas(final String nasIpAddres, final String nasMacAddress) {
         new Thread(new Runnable() {
             @Override
@@ -70,6 +92,7 @@ public class NasConnector {
                     }
 
                     String ipPart = nasIpAddres.substring(0, nasIpAddres.lastIndexOf('.'));
+                    // TODO maso: this can be done better by using network mask from network interface
                     String broadCastIp = ipPart + ".255";
 
                     InetAddress address = InetAddress.getByName(broadCastIp);

@@ -9,6 +9,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * Resolves NAS state every 10 seconds.
+ *
+ */
 public class NasStateResolver extends Thread {
     private static final String NAS_URL_PATTERN = "http://%s/r51009,/adv,/loginwrap.html";
 
@@ -56,6 +60,11 @@ public class NasStateResolver extends Thread {
         }
     }
 
+    /**
+     * Adds NAS status change listener.
+     *
+     * @param listener
+     */
     public void addNasStatusChangeListener(NasStatusChangeListener listener) {
         nasStatusChangeListeners.add(listener);
     }
@@ -66,6 +75,10 @@ public class NasStateResolver extends Thread {
         }
     }
 
+    /**
+     * Stops state resolving thead.
+     *
+     */
     public synchronized void stopStateResolving() {
         this.running = false;
     }
