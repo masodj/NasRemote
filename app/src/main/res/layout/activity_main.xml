@@ -6,17 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <LinearLayout
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="9dp"
-        tools:layout_editor_absoluteY="0dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp">
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
         <TextView
             android:id="@+id/ipAddressLabel"
@@ -99,4 +96,6 @@
             android:layout_height="wrap_content"
             android:text="Turn OFF" />
     </LinearLayout>
+</ScrollView>
+
 </android.support.constraint.ConstraintLayout>
