@@ -67,13 +67,6 @@ public class MainActivity extends AppCompatActivity implements NasStatusChangeLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        WifiManager wifiManager = (WifiManager)
-                getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-
-        DhcpInfo dhcpInfo = wifiManager.getDhcpInfo();
-        System.out.println(intToIp(dhcpInfo.netmask));
-
-
         model = new AppModel(getApplicationContext(), this);
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
@@ -219,12 +212,5 @@ public class MainActivity extends AppCompatActivity implements NasStatusChangeLi
         if (storedUiState != null && storedUiState.isStoreData()) {
             model.storeUiState(buildUiData());
         }
-    }
-
-    public String intToIp(int addr) {
-        return  ((addr & 0xFF) + "." +
-                ((addr >>>= 8) & 0xFF) + "." +
-                ((addr >>>= 8) & 0xFF) + "." +
-                ((addr >>>= 8) & 0xFF));
     }
 }
