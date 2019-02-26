@@ -1,11 +1,8 @@
 package cz.technecium.nasremote;
 
-import android.content.Context;
 import android.graphics.Color;
-import android.net.DhcpInfo;
-import android.net.wifi.WifiManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
@@ -60,7 +57,6 @@ public class MainActivity extends AppCompatActivity implements NasStatusChangeLi
             }
         }
     };
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
