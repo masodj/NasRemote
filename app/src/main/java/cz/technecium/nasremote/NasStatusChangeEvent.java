@@ -1,18 +1,13 @@
 package cz.technecium.nasremote;
 
+import lombok.Data;
+
 /**
  * NAS status change event object
  *
  */
+@Data
 public class NasStatusChangeEvent {
-   private final NasStatusChangeEventType eventType;
-
-    public NasStatusChangeEvent(NasStatusChangeEventType eventType) {
-        this.eventType = eventType;
-    }
-
-    public NasStatusChangeEventType getEventType() {
-        return eventType;
-    }
+    private final NasStatusChangeEventType eventType;
 }
 

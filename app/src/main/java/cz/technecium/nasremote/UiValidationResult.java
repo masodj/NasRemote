@@ -4,9 +4,12 @@ import android.widget.TextView;
 
 import java.util.Set;
 
+import lombok.Getter;
+
 /**
  * Holder for UI validation results.
  */
+@Getter
 public class UiValidationResult {
     private final Set<TextView> invalidElements;
     private final Set<TextView> validElements;
@@ -14,13 +17,5 @@ public class UiValidationResult {
     public UiValidationResult(Set<TextView> invalidElements, Set<TextView> validElements) {
         this.invalidElements = invalidElements;
         this.validElements = validElements;
-    }
-
-    public Set<TextView> getInvalidElements() {
-        return invalidElements;
-    }
-
-    public Set<TextView> getValidElements() {
-        return validElements;
     }
 }

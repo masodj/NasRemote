@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import lombok.SneakyThrows;
+
 /**
  * Resolves NAS state every 10 seconds.
  *
@@ -25,6 +27,7 @@ public class NasStateResolver extends Thread {
         this.nasIpAddress = nasIpAddress;
     }
 
+    @SneakyThrows
     @Override
     public void run() {
         if (nasIpAddress == null || nasIpAddress.isEmpty()) {
@@ -35,12 +38,7 @@ public class NasStateResolver extends Thread {
         while (running) {
             CloseableHttpClient client = HttpClients.createDefault();
             HttpGet httpGet = new HttpGet(String.format(NAS_URL_PATTERN, nasIpAddress));
-            CloseableHttpResponse response = null;
-            try {
-                response = client.execute(httpGet);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            CloseableHttpResponse response = client.execute(httpGet);
 
             NasStatusChangeEvent event;
             if (response == null) {
@@ -52,11 +50,7 @@ public class NasStateResolver extends Thread {
             }
             fireNasStatusChangedEvent(event);
 
-            try {
-                sleep(10000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            sleep(10000);
         }
     }
 

@@ -1,6 +1,9 @@
 package cz.technecium.nasremote;
 
+import android.content.Context;
 import android.graphics.Color;
+import android.net.DhcpInfo;
+import android.net.wifi.WifiManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -63,6 +66,13 @@ public class MainActivity extends AppCompatActivity implements NasStatusChangeLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        WifiManager wifiManager = (WifiManager)
+                getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+
+        DhcpInfo dhcpInfo = wifiManager.getDhcpInfo();
+        System.out.println(intToIp(dhcpInfo.netmask));
+
 
         model = new AppModel(getApplicationContext(), this);
         username = findViewById(R.id.username);
@@ -209,5 +219,12 @@ public class MainActivity extends AppCompatActivity implements NasStatusChangeLi
         if (storedUiState != null && storedUiState.isStoreData()) {
             model.storeUiState(buildUiData());
         }
+    }
+
+    public String intToIp(int addr) {
+        return  ((addr & 0xFF) + "." +
+                ((addr >>>= 8) & 0xFF) + "." +
+                ((addr >>>= 8) & 0xFF) + "." +
+                ((addr >>>= 8) & 0xFF));
     }
 }
