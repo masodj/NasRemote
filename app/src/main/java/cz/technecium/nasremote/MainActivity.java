@@ -46,13 +46,11 @@ public class MainActivity extends AppCompatActivity implements NasStatusChangeLi
         public void afterTextChanged(Editable s) {
             handleValidations();
             if (validateInputs().getInvalidElements().isEmpty()) {
-                turnOff.setEnabled(true);
-                turnOn.setEnabled(true);
+                enableButtons();
                 model.stopNasStateResolving();
                 model.startNasStateResolving(ipAddress.getText().toString());
             } else {
-                turnOff.setEnabled(false);
-                turnOn.setEnabled(false);
+                disableButtons();
                 model.stopNasStateResolving();
             }
         }
@@ -77,9 +75,12 @@ public class MainActivity extends AppCompatActivity implements NasStatusChangeLi
         if (storedUiState != null && storedUiState.isStoreData()) {
             fillFromUiData(storedUiState);
         }
-
         model.startNasStateResolving(ipAddress.getText().toString());
         addListeners();
+
+        if (!validateInputs().getInvalidElements().isEmpty()){
+            disableButtons();
+        }
     }
 
     private void addListeners() {
@@ -203,10 +204,20 @@ public class MainActivity extends AppCompatActivity implements NasStatusChangeLi
         }
     }
 
-    private void handleStateStoring(){
+    private void handleStateStoring() {
         UiData storedUiState = model.getStoredUiState();
         if (storedUiState != null && storedUiState.isStoreData()) {
             model.storeUiState(buildUiData());
         }
+    }
+
+    private void enableButtons() {
+        turnOff.setEnabled(true);
+        turnOn.setEnabled(true);
+    }
+
+    private void disableButtons() {
+        turnOff.setEnabled(false);
+        turnOn.setEnabled(false);
     }
 }
