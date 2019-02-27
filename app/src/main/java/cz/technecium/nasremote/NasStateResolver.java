@@ -8,11 +8,8 @@ import org.apache.http.impl.client.HttpClients;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import lombok.SneakyThrows;
-
 /**
  * Resolves NAS state every 10 seconds.
- *
  */
 public class NasStateResolver extends Thread {
     private static final String NAS_URL_PATTERN = "http://%s/r51009,/adv,/loginwrap.html";
@@ -26,7 +23,6 @@ public class NasStateResolver extends Thread {
         this.nasIpAddress = nasIpAddress;
     }
 
-    @SneakyThrows
     @Override
     public void run() {
         if (nasIpAddress == null || nasIpAddress.isEmpty()) {
@@ -35,21 +31,23 @@ public class NasStateResolver extends Thread {
 
         running = true;
         while (running) {
-            CloseableHttpClient client = HttpClients.createDefault();
-            HttpGet httpGet = new HttpGet(String.format(NAS_URL_PATTERN, nasIpAddress));
-            CloseableHttpResponse response = client.execute(httpGet);
-
-            NasStatusChangeEvent event;
-            if (response == null) {
-                event = new NasStatusChangeEvent(NasStatusChangeEventType.NAS_OFF);
-            } else if (response.getStatusLine().getStatusCode() > 399) {
-                event = new NasStatusChangeEvent(NasStatusChangeEventType.NAS_OFF);
-            } else {
-                event = new NasStatusChangeEvent(NasStatusChangeEventType.NAS_ON);
+            try {
+                CloseableHttpClient client = HttpClients.createDefault();
+                HttpGet httpGet = new HttpGet(String.format(NAS_URL_PATTERN, nasIpAddress));
+                CloseableHttpResponse response = client.execute(httpGet);
+                NasStatusChangeEvent event;
+                if (response == null) {
+                    event = new NasStatusChangeEvent(NasStatusChangeEventType.NAS_OFF);
+                } else if (response.getStatusLine().getStatusCode() > 399) {
+                    event = new NasStatusChangeEvent(NasStatusChangeEventType.NAS_OFF);
+                } else {
+                    event = new NasStatusChangeEvent(NasStatusChangeEventType.NAS_ON);
+                }
+                fireNasStatusChangedEvent(event);
+                sleep(10000);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            fireNasStatusChangedEvent(event);
-
-            sleep(10000);
         }
     }
 
@@ -70,7 +68,6 @@ public class NasStateResolver extends Thread {
 
     /**
      * Stops state resolving thead.
-     *
      */
     public synchronized void stopStateResolving() {
         this.running = false;
